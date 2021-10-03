@@ -25,8 +25,6 @@ namespace VehicleTrackerApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<Geometry>("Location")
@@ -38,6 +36,14 @@ namespace VehicleTrackerApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Places");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            Location = (NetTopologySuite.Geometries.Polygon)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POLYGON ((35.6 36.6, 35.7 36.6, 35.7 36.6, 35.6 36.6))"),
+                            Name = "test"
+                        });
                 });
 
             modelBuilder.Entity("VehicleTrackerApi.Data.Model.Report", b =>
@@ -45,8 +51,6 @@ namespace VehicleTrackerApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreateReportDate")
@@ -75,8 +79,6 @@ namespace VehicleTrackerApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<Point>("CurrentLocation")
@@ -88,6 +90,44 @@ namespace VehicleTrackerApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Vehicles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CurrentLocation = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"),
+                            RegisterNumber = "04TT336"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CurrentLocation = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"),
+                            RegisterNumber = "34ET336"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CurrentLocation = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"),
+                            RegisterNumber = "04BT336"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CurrentLocation = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"),
+                            RegisterNumber = "04TA336"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CurrentLocation = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"),
+                            RegisterNumber = "04AT336"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CurrentLocation = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"),
+                            RegisterNumber = "12AZ1236"
+                        });
                 });
 
             modelBuilder.Entity("VehicleTrackerApi.Data.Model.VehiclePosition", b =>
@@ -95,8 +135,6 @@ namespace VehicleTrackerApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Date")

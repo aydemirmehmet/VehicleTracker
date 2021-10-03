@@ -4,7 +4,7 @@ using NetTopologySuite.Geometries;
 
 namespace VehicleTrackerApi.Migrations
 {
-    public partial class initialData : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -83,6 +83,24 @@ namespace VehicleTrackerApi.Migrations
                         principalTable: "Vehicles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Places",
+                columns: new[] { "Id", "Location", "Name" },
+                values: new object[] { 2, (NetTopologySuite.Geometries.Polygon)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POLYGON ((35.6 36.6, 35.7 36.6, 35.7 36.6, 35.6 36.6))"), "test" });
+
+            migrationBuilder.InsertData(
+                table: "Vehicles",
+                columns: new[] { "Id", "CurrentLocation", "RegisterNumber" },
+                values: new object[,]
+                {
+                    { 1, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "04TT336" },
+                    { 2, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "34ET336" },
+                    { 3, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "04BT336" },
+                    { 4, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "04TA336" },
+                    { 5, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "04AT336" },
+                    { 6, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "12AZ1236" }
                 });
 
             migrationBuilder.CreateIndex(

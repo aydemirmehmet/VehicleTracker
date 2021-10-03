@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VehicleTrackerApi;
 using VehicleTrackerApi.Data.Model;
 
 namespace VehicleApi.Contexts
@@ -21,28 +22,30 @@ namespace VehicleApi.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Seed();
 
             modelBuilder.Entity<Place>(entity=> {
                 entity.Property(x => x.Id)
-                       .UseIdentityColumn();
+                       .ValueGeneratedOnAdd();
                 entity.HasMany(x => x.Reports).WithOne(x => x.Place).HasForeignKey(x => x.PlaceId);
             });
 
 
             modelBuilder.Entity<Vehicle>(entity => {
                 entity.Property(x => x.Id)
-                       .UseIdentityColumn();
+                       .ValueGeneratedOnAdd();
                 entity.HasMany(x => x.Reports).WithOne(x => x.Vehicle).HasForeignKey(x => x.VehicleId);
             });
           
 
             modelBuilder.Entity<VehiclePosition>(entity => {
-                entity.Property(x => x.Id).UseIdentityColumn();
+                entity.Property(x => x.Id).ValueGeneratedOnAdd();
                
             });
 
             modelBuilder.Entity<Report>(entity => {
-                entity.Property(x => x.Id).UseIdentityColumn();
+                entity.Property(x => x.Id).ValueGeneratedOnAdd();
 
             });
 

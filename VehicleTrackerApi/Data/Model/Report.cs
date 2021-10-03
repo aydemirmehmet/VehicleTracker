@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace VehicleTrackerApi.Data.Model
 {
     public class Report
     {
+        [Key]
         public int Id { get; set; }
         public DateTime CreateReportDate { get; set; }
 

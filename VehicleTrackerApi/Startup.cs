@@ -33,7 +33,7 @@ namespace VehicleTrackerApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            #region Inject Repositories
+            #region Inject Repositories DI
 
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IVehicleRepository, VehicleRepository>();
@@ -42,7 +42,7 @@ namespace VehicleTrackerApi
             services.AddTransient<IReportRepository, ReportRepository>();
             #endregion
 
-            #region Inject AutoMapper
+            #region Inject AutoMapper DI
             var mappingConfig = new MapperConfiguration(mc => {
                 mc.AddProfile(new PlaceProfile());
                 mc.AddProfile(new ReportProfile());
