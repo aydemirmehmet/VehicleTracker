@@ -9,7 +9,6 @@ namespace VehicleTrackerApi.Data.Model
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public Point Location { get; set; }
-
         public int VehicleId { get; set; }
         public Vehicle Vehicle { get; set; }
     }

@@ -12,6 +12,7 @@ namespace VehicleTrackerApi.Services
     {
         public VehicleRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
+
         }
     }
 
