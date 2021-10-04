@@ -9,7 +9,7 @@ namespace VehicleTrackerApi
     public class GeoJsonResultItem
     {
         [JsonProperty("type")]
-        public string Type { get; set; }
+        public string Type { get; set; } = "FeatureCollection";
 
         [JsonProperty("features")]
         public List<FeatureItem> Features { get; set; }
@@ -19,39 +19,31 @@ namespace VehicleTrackerApi
 
     
 
-    public partial class FeatureItem
+    public  class FeatureItem
     {
-        [JsonProperty("id")]
-        public long Id { get; set; }
+       
 
         [JsonProperty("type")]
-        public string Type { get; set; }
+        public string Type { get; set; } = "Feature";
 
         [JsonProperty("geometry")]
-        public GeometryItem Geometry { get; set; }
+        public GeometryItem Geometry { get; set; } 
 
         [JsonProperty("properties")]
         public PropertiesCol Properties { get; set; }
     }
 
-    public partial class GeometryItem
+    public  class GeometryItem
     {
         [JsonProperty("type")]
-        public string Type { get; set; }
+        public string Type { get; set; } = "Polygon";
 
         [JsonProperty("coordinates")]
-        public List<double> Coordinates { get; set; }
+        public List<List<List<double>>> Coordinates { get; set; }
     }
 
-    public partial class PropertiesCol
+    public  class PropertiesCol
     {
-        [JsonProperty("LandId")]
-        public long LandId { get; set; }
-
-        [JsonProperty("SumSpace")]
-        public long SumSpace { get; set; }
-
-        [JsonProperty("CLevelId")]
-        public long CLevelId { get; set; }
+        
     }
 }
