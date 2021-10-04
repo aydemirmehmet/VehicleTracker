@@ -102,19 +102,34 @@ namespace VehicleTrackerApi.Controllers
         [HttpPatch]
   
         [ProducesResponseType(typeof(VehicleDto), 200)]
+        [ProducesResponseType(typeof(void), 400)]
         public IActionResult SaveLocation([FromBody] VehicleDto entity)
         {
-            var map= _mapper.Map<Vehicle>(entity);
-            var Vehicleposition = new VehiclePosition
+            var report = _repository.Reports.GetAll().Where(x=>x.Id==entity.Id && x.ReportState!=PlaceState.Enter).FirstOrDefault();
+            if (report == null)
             {
-                Location = map.CurrentLocation,
-                Vehicle = map
-            };
-            _repository.Vehicles.Update(map);
+                
+                
+                var map = _mapper.Map<Vehicle>(entity);
+                var Vehicleposition = new VehiclePosition
+                {
+                    Location = map.CurrentLocation,
+                    Vehicle = map
+                };
+                var CreateReport = new Report
+                {
+                    CreateReportDate = DateTime.Now,
+                    Vehicle=map,
+                    ReportState=PlaceState.Enter,
+                };
+                _repository.Vehicles.Update(map);
+                _repository.VehiclePositions.Add(Vehicleposition);
+                _repository.Reports.Add(CreateReport);
+                _repository.Complete();
+                return Ok(entity);
+            }
 
-            _repository.VehiclePositions.Add(Vehicleposition);
-            _repository.Complete();
-            return Ok(entity); 
+            return BadRequest();
         }
 
        

@@ -33,20 +33,23 @@ namespace VehicleTrackerApi.Controllers
         [ProducesResponseType(typeof(FeatureCollection), 200)]
         public FeatureCollection Get()
         {
-            var result = _repository.Places.GetAll();
+            var result = _repository.Places.GetAll().ToList();
 
 
             var CreateJson = new FeatureCollection();
-            foreach (var item in result)
+            if (result != null)
             {
-                CreateJson.Add(new Feature
+                foreach (var item in result)
                 {
-                    Geometry = item.Location,
-                    Attributes = new AttributesTable
+                    CreateJson.Add(new Feature
+                    {
+                        Geometry = item.Location,
+                        Attributes = new AttributesTable
                     {
                         {"Bölge Adı",item.Name }
                     },
-                });
+                    });
+                }
             }
 
             return CreateJson;

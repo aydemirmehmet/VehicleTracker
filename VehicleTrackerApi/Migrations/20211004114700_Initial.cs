@@ -15,7 +15,7 @@ namespace VehicleTrackerApi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Location = table.Column<Geometry>(type: "geography", nullable: true)
+                    Location = table.Column<Geometry>(type: "geometry", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -29,7 +29,8 @@ namespace VehicleTrackerApi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RegisterNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CurrentLocation = table.Column<Point>(type: "geography", nullable: true)
+                    CurrentLocation = table.Column<Point>(type: "geography", nullable: true),
+                    IsInPlace = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,19 +89,19 @@ namespace VehicleTrackerApi.Migrations
             migrationBuilder.InsertData(
                 table: "Places",
                 columns: new[] { "Id", "Location", "Name" },
-                values: new object[] { 2, (NetTopologySuite.Geometries.Polygon)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POLYGON ((35.6 36.6, 35.7 36.6, 35.7 36.6, 35.6 36.6))"), "test" });
+                values: new object[] { 1, (NetTopologySuite.Geometries.Polygon)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POLYGON ((29.94873046875 37.71859032558816, 43.39599609375 37.71859032558816, 43.39599609375 40.896905775860006, 29.94873046875 40.896905775860006, 29.94873046875 37.71859032558816))"), "Türkiye" });
 
             migrationBuilder.InsertData(
                 table: "Vehicles",
-                columns: new[] { "Id", "CurrentLocation", "RegisterNumber" },
+                columns: new[] { "Id", "CurrentLocation", "IsInPlace", "RegisterNumber" },
                 values: new object[,]
                 {
-                    { 1, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "04TT336" },
-                    { 2, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "34ET336" },
-                    { 3, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "04BT336" },
-                    { 4, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "04TA336" },
-                    { 5, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "04AT336" },
-                    { 6, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "12AZ1236" }
+                    { 1, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), 30, "04TT336" },
+                    { 2, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), 30, "34ET336" },
+                    { 3, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), 30, "04BT336" },
+                    { 4, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), 30, "04TA336" },
+                    { 5, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), 30, "04AT336" },
+                    { 6, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), 30, "12AZ1236" }
                 });
 
             migrationBuilder.CreateIndex(

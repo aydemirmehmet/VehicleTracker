@@ -9,10 +9,13 @@ namespace VehicleTrackerApi.Data.Model
 {
     public class Vehicle: IEntity
     {
-       
+        
         public string RegisterNumber { get; set; }
         public Point CurrentLocation { get; set; }
         public List<VehiclePosition> VehiclePositions { get; set; }
         public List<Report> Reports { get; set; }
+
+        public PlaceState IsInPlace { get; set; } = PlaceState.OnRoad;
+       
     }
 }

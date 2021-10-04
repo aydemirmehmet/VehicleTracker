@@ -2,7 +2,8 @@
 {
     public enum PlaceState
     {
-        Enter,
-        Exit
+        Enter=10,
+        Exit=20,
+        OnRoad=30
     }
 }

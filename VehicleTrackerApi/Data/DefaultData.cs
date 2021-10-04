@@ -58,14 +58,20 @@ namespace VehicleTrackerApi.Data
         public static List<Place> LoadPlaceData()
         {
             var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
-            Coordinate[] coordinate = { new Coordinate(35.6, 36.6), new Coordinate(35.7, 36.6), new Coordinate(35.7, 36.6), new Coordinate(35.6, 36.6) };
+            Coordinate[] coordinate = { 
+                new Coordinate( 29.94873046875, 37.71859032558816),
+                new Coordinate( 43.39599609375, 37.71859032558816),
+                new Coordinate(43.39599609375, 40.896905775860006),
+                new Coordinate(29.94873046875, 40.896905775860006) ,
+                new Coordinate( 29.94873046875, 37.71859032558816)
+            };
            
 
             return new List<Place>() { 
                     new Place
                     {
-                        Id=2,
-                        Name="test",
+                        Id=1,
+                        Name="Türkiye",
                           Location=geometryFactory.CreatePolygon(coordinate)
                     
 
