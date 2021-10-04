@@ -43,7 +43,7 @@ namespace VehicleTrackerApi.Controllers
         public FeatureCollection Get()
         {
             var result = _repository.Vehicles.GetAll();
-     
+          
            
             var CreateJson = new FeatureCollection();
             foreach (var item in result)

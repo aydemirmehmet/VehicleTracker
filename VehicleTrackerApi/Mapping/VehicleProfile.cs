@@ -8,9 +8,8 @@ namespace VehicleTrackerApi.Mapping
 {
     public class VehicleProfile : Profile
     {
-        public VehicleProfile()
+        public VehicleProfile(GeometryFactory geometryFactory)
         {
-            var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
             
             CreateMap<Vehicle, VehicleDto>().ReverseMap()
               .ForMember(dest => dest.CurrentLocation, opt => opt.MapFrom(x => geometryFactory.CreatePoint(new Coordinate(x.Longtitude, x.Latitude))));

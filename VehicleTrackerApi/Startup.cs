@@ -51,13 +51,23 @@ namespace VehicleTrackerApi
             #endregion
 
             #region Inject AutoMapper DI
-            var mappingConfig = new MapperConfiguration(mc => {
-                mc.AddProfile(new PlaceProfile());
-                mc.AddProfile(new ReportProfile());
-                mc.AddProfile(new VehicleProfile());
-            });
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
+          
+           
+            services.AddSingleton<GeometryFactory>(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326));
+
+            services.AddSingleton(proviver =>
+                   new MapperConfiguration(mc =>
+                   {
+
+                       var geometryFactory = proviver.GetRequiredService<GeometryFactory>();
+                       mc.AddProfile(new PlaceProfile());
+                       mc.AddProfile(new ReportProfile());
+                       mc.AddProfile(new VehicleProfile(geometryFactory));
+                   }
+
+                       ).CreateMapper()
+            ); 
+
 
             #endregion
             services.AddDbContext<ApplicationDbContext>(options=>{
