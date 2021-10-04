@@ -9,6 +9,8 @@ namespace VehicleTrackerApi.Services.Base
     {
         IPlaceRepository Places { get;}
         IVehicleRepository Vehicles { get;  }
+        IVehiclePositionRepository VehiclePositions { get; }
+        IReportRepository Reports { get;  }
         int Complete();
     }
 }

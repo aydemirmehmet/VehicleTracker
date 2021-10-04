@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using NetTopologySuite;
 using NetTopologySuite.Features;
@@ -37,7 +38,6 @@ namespace VehicleTrackerApi.Controllers
         }
 
         [HttpGet]
-        [Consumes("application/geo+json")]
         [Produces("application/geo+json")]
         [ProducesResponseType(typeof(FeatureCollection), 200)]
         public FeatureCollection Get()
@@ -50,9 +50,7 @@ namespace VehicleTrackerApi.Controllers
             {
                 CreateJson.Add(new Feature
                 {
-                    
                     Geometry = item.CurrentLocation,
-                   
                     Attributes = new AttributesTable
                     {
                         {"Plaka",item.RegisterNumber }
@@ -63,24 +61,58 @@ namespace VehicleTrackerApi.Controllers
             return CreateJson;
         }
 
-
-        [HttpPost]
-        [Consumes("application/geo+json")]
+        [HttpGet("RouteOfVehicle")]
         [Produces("application/geo+json")]
         [ProducesResponseType(typeof(FeatureCollection), 200)]
-        public IActionResult SaveVehicleLovation([FromBody] GeoJsonResultItem entity)
+        public FeatureCollection RouteOfVehicle(int Id)
         {
-          var model=  JsonConvert.SerializeObject(entity);
+            var result = _repository.VehiclePositions.GetAll( include: source => source.Include(x => x.Vehicle)).Where(x=>x.Vehicle.Id==Id).ToList();
+        
+           
 
-            return Ok();
+            var CreateJson = new FeatureCollection();
+            foreach (var item in result)
+            {
+                CreateJson.Add(new Feature
+                {
+
+                    Geometry = item.Location,
+                    Attributes = new AttributesTable
+                    {
+                        {"Tarih",item.Date },
+                        {"Plaka",item.Vehicle.RegisterNumber }
+                    },
+                });
+            }
+
+            return CreateJson;
+        }
+        [HttpPost]
+   
+        [ProducesResponseType(typeof(VehicleDto), 200)]
+        public IActionResult Add([FromBody] VehicleDto entity)
+        {
+            var result = _mapper.Map<Vehicle>(entity);
+            _repository.Vehicles.Add(result);
+            _repository.Complete();
+            return Ok(result);
         }
 
 
         [HttpPatch]
-         public IActionResult SaveVehicleLovation([FromBody] VehicleDto entity)
+  
+        [ProducesResponseType(typeof(VehicleDto), 200)]
+        public IActionResult SaveLocation([FromBody] VehicleDto entity)
         {
             var map= _mapper.Map<Vehicle>(entity);
-            _repository.Vehicles.Add(map);
+            var Vehicleposition = new VehiclePosition
+            {
+                Location = map.CurrentLocation,
+                Vehicle = map
+            };
+            _repository.Vehicles.Update(map);
+
+            _repository.VehiclePositions.Add(Vehicleposition);
             _repository.Complete();
             return Ok(entity); 
         }
@@ -90,7 +122,7 @@ namespace VehicleTrackerApi.Controllers
         [HttpDelete]
         [ProducesResponseType(typeof(void), 200)]
         public IActionResult Delete(int Id)
-        { var result = _repository.Vehicles.GetById(Id);
+        { var result = _repository.Vehicles.Get(Id);
             if (result != null)
             {
                 _repository.Vehicles.Remove(result);

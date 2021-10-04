@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace VehicleTrackerApi.Data.Model
 {
-    public class Vehicle
+    public class Vehicle: IEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+       
         public string RegisterNumber { get; set; }
         public Point CurrentLocation { get; set; }
         public List<VehiclePosition> VehiclePositions { get; set; }

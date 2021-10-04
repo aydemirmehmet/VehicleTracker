@@ -4,10 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace VehicleTrackerApi.Data.Model
 {
-    public class Place
+    public class Place: IEntity
     {
-        [Key]
-        public int Id { get; set; }
+       
         public string Name { get; set; }
         public Geometry Location { get; set; }
 

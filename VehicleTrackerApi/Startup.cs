@@ -63,6 +63,7 @@ namespace VehicleTrackerApi
                        mc.AddProfile(new PlaceProfile());
                        mc.AddProfile(new ReportProfile());
                        mc.AddProfile(new VehicleProfile(geometryFactory));
+                 
                    }
 
                        ).CreateMapper()

@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using VehicleApi.Contexts;
+using VehicleTrackerApi.Data.Model;
 using VehicleTrackerApi.Services.Base;
 
 namespace VehicleTrackerApi.Services
 {
-    public class GeneralRepository<T> : IGeneralRepository<T> where T : class, new()
+    public class GeneralRepository<T> : IGeneralRepository<T> where T : IEntity
     {
         protected readonly ApplicationDbContext _context;
         public GeneralRepository(ApplicationDbContext context)
@@ -19,30 +21,39 @@ namespace VehicleTrackerApi.Services
         {
             _context.Set<T>().Add(entity);
         }
-        public void AddRange(IEnumerable<T> entities)
+        public void Update(T entity)
         {
-            _context.Set<T>().AddRange(entities);
+            _context.Set<T>().Update(entity);
         }
-        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
+        public IQueryable<T> Find(Expression<Func<T, bool>> expression)
         {
             return _context.Set<T>().Where(expression);
         }
-        public IEnumerable<T> GetAll()
+
+        public IQueryable<T> GetAll( Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null) 
         {
-            return _context.Set<T>().ToList();
+            var result = _context.Set<T>().AsQueryable();
+
+            if (include != null)
+                result = include(result);
+
+            return result;
         }
-        public T GetById(int id)
+        public T Get(int id, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
         {
-            return _context.Set<T>().Find(id);
+            var result = _context.Set<T>().AsQueryable();
+
+            if (include != null)
+                result = include(result);
+
+            return result.FirstOrDefault(x=>x.Id==id);
         }
+      
         public void Remove(T entity)
         {
             _context.Set<T>().Remove(entity);
         }
-        public void RemoveRange(IEnumerable<T> entities)
-        {
-            _context.Set<T>().RemoveRange(entities);
-        }
+      
 
     }
 

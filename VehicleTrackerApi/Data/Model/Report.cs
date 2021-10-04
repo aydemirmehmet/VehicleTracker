@@ -4,10 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace VehicleTrackerApi.Data.Model
 {
-    public class Report
+    public class Report: IEntity
     {
-        [Key]
-        public int Id { get; set; }
+       
         public DateTime CreateReportDate { get; set; }
 
         public int VehicleId { get; set; }
