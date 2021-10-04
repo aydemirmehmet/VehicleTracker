@@ -7,5 +7,6 @@ namespace VehicleTrackerApi.Dto
 {
     public class PlaceDto
     {
+      
     }
 }

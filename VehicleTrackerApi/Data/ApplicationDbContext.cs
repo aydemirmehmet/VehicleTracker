@@ -27,25 +27,25 @@ namespace VehicleApi.Contexts
 
             modelBuilder.Entity<Place>(entity=> {
                 entity.Property(x => x.Id)
-                       .ValueGeneratedOnAdd();
+                       .UseIdentityColumn();
                 entity.HasMany(x => x.Reports).WithOne(x => x.Place).HasForeignKey(x => x.PlaceId);
             });
 
 
             modelBuilder.Entity<Vehicle>(entity => {
                 entity.Property(x => x.Id)
-                       .ValueGeneratedOnAdd();
+                       .UseIdentityColumn();
                 entity.HasMany(x => x.Reports).WithOne(x => x.Vehicle).HasForeignKey(x => x.VehicleId);
             });
           
 
             modelBuilder.Entity<VehiclePosition>(entity => {
-                entity.Property(x => x.Id).ValueGeneratedOnAdd();
-               
+                entity.Property(x => x.Id).UseIdentityColumn();
+
             });
 
             modelBuilder.Entity<Report>(entity => {
-                entity.Property(x => x.Id).ValueGeneratedOnAdd();
+                entity.Property(x => x.Id).UseIdentityColumn();
 
             });
 

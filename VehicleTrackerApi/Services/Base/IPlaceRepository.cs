@@ -2,7 +2,7 @@
 
 namespace VehicleTrackerApi.Services.Base
 {
-    public interface IPlaceRepository : IRepository<Place>
+    public interface IPlaceRepository : IGeneralRepository<Place>
     {
     }
 }

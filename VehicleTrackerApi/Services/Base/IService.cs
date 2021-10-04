@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VehicleTrackerApi.Data.Model;
 
 namespace VehicleTrackerApi.Services.Base
 {
-    public interface IVehicleRepository:IGeneralRepository<Vehicle>
+    public interface IService : IDisposable
     {
+        IPlaceRepository Places { get;}
+        IVehicleRepository Vehicles { get;  }
+        int Complete();
     }
 }

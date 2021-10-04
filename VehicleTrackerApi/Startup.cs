@@ -17,6 +17,12 @@ using VehicleApi.Contexts;
 using VehicleTrackerApi.Mapping;
 using VehicleTrackerApi.Services;
 using VehicleTrackerApi.Services.Base;
+using NetTopologySuite.IO.Converters;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using NetTopologySuite;
+using NetTopologySuite.Geometries;
+using VehicleTrackerApi.Extensions;
 
 namespace VehicleTrackerApi
 {
@@ -35,11 +41,13 @@ namespace VehicleTrackerApi
 
             #region Inject Repositories DI
 
-            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
             services.AddTransient<IVehicleRepository, VehicleRepository>();
             services.AddTransient<IVehiclePositionRepository, VehiclePositionRepository>();
             services.AddTransient<IPlaceRepository, PlaceRepository>();
             services.AddTransient<IReportRepository, ReportRepository>();
+
+            services.AddTransient<IService, ServiceRepository>();
             #endregion
 
             #region Inject AutoMapper DI
@@ -58,7 +66,21 @@ namespace VehicleTrackerApi
                           opt.UseNetTopologySuite();
                       });
             });
-            services.AddControllers();
+            services.AddControllers(options => {
+                options.ModelMetadataDetailsProviders.Add(new SuppressChildValidationMetadataProvider(typeof(Point)));
+                options.ModelMetadataDetailsProviders.Add(new SuppressChildValidationMetadataProvider(typeof(Coordinate)));
+                options.ModelMetadataDetailsProviders.Add(new SuppressChildValidationMetadataProvider(typeof(Polygon)));
+                options.ModelMetadataDetailsProviders.Add(new SuppressChildValidationMetadataProvider(typeof(Geometry)));
+            }).AddNewtonsoftJson(options => {
+                foreach (var converter in NetTopologySuite.IO.GeoJsonSerializer.Create(new GeometryFactory(new PrecisionModel(), 4326)).Converters)
+                {
+                    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                    options.SerializerSettings.Converters.Add(converter);
+                }
+            }).SetCompatibilityVersion(CompatibilityVersion.Latest);
+
+            services.AddSingleton(NtsGeometryServices.Instance);
+
 
             services.AddSwaggerGen(c =>
             {
@@ -75,6 +97,7 @@ namespace VehicleTrackerApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VehicleTrackerApi v1"));
             }
+            app.ConfigureExceptionHandler();
 
             app.UseHttpsRedirection();
 

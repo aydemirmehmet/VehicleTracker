@@ -7,6 +7,7 @@ namespace VehicleTrackerApi.Dto
 {
     public class VehicleDto
     {
+        public int Id { get; set; }
         public string RegisterNumber { get; set; }
         public double Latitude { get; set; }
         public double Longtitude { get; set; }

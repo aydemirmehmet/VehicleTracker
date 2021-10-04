@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NetTopologySuite.Geometries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace VehicleTrackerApi.Mapping
     {
         public PlaceProfile()
         {
-            CreateMap<Place, PlaceDto>().ReverseMap();
+
+            CreateMap<PlaceDto, Place>().ReverseMap();
         }
     }
 }

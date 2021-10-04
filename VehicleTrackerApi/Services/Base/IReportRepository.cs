@@ -2,7 +2,7 @@
 
 namespace VehicleTrackerApi.Services.Base
 {
-    public interface IReportRepository : IRepository<Report>
+    public interface IReportRepository : IGeneralRepository<Report>
     {
       
     }

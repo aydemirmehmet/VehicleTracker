@@ -8,7 +8,7 @@ using VehicleTrackerApi.Services.Base;
 
 namespace VehicleTrackerApi.Services
 {
-    public class VehicleRepository : Repository<Vehicle>, IVehicleRepository
+    public class VehicleRepository : GeneralRepository<Vehicle>, IVehicleRepository
     {
         public VehicleRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
