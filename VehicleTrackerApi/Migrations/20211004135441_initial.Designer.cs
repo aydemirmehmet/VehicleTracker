@@ -11,8 +11,8 @@ using VehicleApi.Contexts;
 namespace VehicleTrackerApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211004114700_Initial")]
-    partial class Initial
+    [Migration("20211004135441_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,7 +32,7 @@ namespace VehicleTrackerApi.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<Geometry>("Location")
-                        .HasColumnType("geometry");
+                        .HasColumnType("geography");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -183,6 +183,7 @@ namespace VehicleTrackerApi.Migrations
                     b.HasOne("VehicleTrackerApi.Data.Model.Vehicle", "Vehicle")
                         .WithMany("Reports")
                         .HasForeignKey("VehicleId")
+                        .HasConstraintName("ReportID_vehicle_Fk")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

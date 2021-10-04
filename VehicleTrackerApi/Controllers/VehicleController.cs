@@ -109,23 +109,27 @@ namespace VehicleTrackerApi.Controllers
             if (report == null)
             {
                 
-                
+
+
+
                 var map = _mapper.Map<Vehicle>(entity);
                 var Vehicleposition = new VehiclePosition
                 {
                     Location = map.CurrentLocation,
                     Vehicle = map
                 };
-                var CreateReport = new Report
-                {
-                    CreateReportDate = DateTime.Now,
-                    Vehicle=map,
-                    ReportState=PlaceState.Enter,
-                };
+                //var CreateReport = new Report
+                //{
+                //    CreateReportDate = DateTime.Now,
+                //    Vehicle=map,
+                //    ReportState=PlaceState.Enter,
+                //};
                 _repository.Vehicles.Update(map);
                 _repository.VehiclePositions.Add(Vehicleposition);
-                _repository.Reports.Add(CreateReport);
+               // _repository.Reports.Add(CreateReport);
                 _repository.Complete();
+
+                
                 return Ok(entity);
             }
 

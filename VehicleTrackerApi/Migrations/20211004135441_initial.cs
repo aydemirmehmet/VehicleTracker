@@ -4,7 +4,7 @@ using NetTopologySuite.Geometries;
 
 namespace VehicleTrackerApi.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace VehicleTrackerApi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Location = table.Column<Geometry>(type: "geometry", nullable: true)
+                    Location = table.Column<Geometry>(type: "geography", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,7 +58,7 @@ namespace VehicleTrackerApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reports_Vehicles_VehicleId",
+                        name: "ReportID_vehicle_Fk",
                         column: x => x.VehicleId,
                         principalTable: "Vehicles",
                         principalColumn: "Id",

@@ -30,7 +30,7 @@ namespace VehicleTrackerApi.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<Geometry>("Location")
-                        .HasColumnType("geometry");
+                        .HasColumnType("geography");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -181,6 +181,7 @@ namespace VehicleTrackerApi.Migrations
                     b.HasOne("VehicleTrackerApi.Data.Model.Vehicle", "Vehicle")
                         .WithMany("Reports")
                         .HasForeignKey("VehicleId")
+                        .HasConstraintName("ReportID_vehicle_Fk")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -14,6 +14,11 @@ namespace VehicleTrackerApi.Services
         {
 
         }
+
+        public bool IsVehicleInPlace()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

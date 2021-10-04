@@ -1,4 +1,7 @@
-﻿using VehicleApi.Contexts;
+﻿
+using System.Collections.Generic;
+using System.Linq;
+using VehicleApi.Contexts;
 using VehicleTrackerApi.Data.Model;
 using VehicleTrackerApi.Services.Base;
 
@@ -8,7 +11,11 @@ namespace VehicleTrackerApi.Services
     {
         public PlaceRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
+           
+
         }
+     
+
     }
 
 }

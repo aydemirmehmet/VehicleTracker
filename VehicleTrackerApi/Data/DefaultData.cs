@@ -10,11 +10,9 @@ namespace VehicleTrackerApi.Data
 {
     public static class DefaultData
     {
-        public static List<Vehicle> LoadVehicleData()
+        public static List<Vehicle> LoadVehicleData(GeometryFactory geometryFactory)
         {
-            var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
-
-
+           
 
             return new List<Vehicle>() { 
                     new Vehicle
@@ -55,10 +53,9 @@ namespace VehicleTrackerApi.Data
         }
 
 
-        public static List<Place> LoadPlaceData()
+        public static List<Place> LoadPlaceData(GeometryFactory geometryFactory)
         {
-            var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
-            Coordinate[] coordinate = { 
+           Coordinate[] coordinate = { 
                 new Coordinate( 29.94873046875, 37.71859032558816),
                 new Coordinate( 43.39599609375, 37.71859032558816),
                 new Coordinate(43.39599609375, 40.896905775860006),
