@@ -12,7 +12,7 @@ namespace VehicleTrackerApi.Mapping
         {
             
             CreateMap<Vehicle, VehicleDto>().ReverseMap()
-              .ForMember(dest => dest.CurrentLocation, opt => opt.MapFrom(x => geometryFactory.CreatePoint(new Coordinate(x.Longtitude, x.Latitude))));
+              .ForMember(dest => dest.CurrentLocation, opt => opt.MapFrom(x => geometryFactory.CreatePoint(new Coordinate(x.Latitude, x.Longtitude))));
         }
    
 

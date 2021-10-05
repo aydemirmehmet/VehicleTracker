@@ -11,8 +11,5 @@ namespace VehicleTrackerApi.Data.Model
         public Geometry Location { get; set; }
 
         public List<Report> Reports { get; set; }
-
-     
-
     }
 }

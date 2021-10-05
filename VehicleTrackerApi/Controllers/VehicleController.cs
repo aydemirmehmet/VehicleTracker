@@ -108,35 +108,33 @@ namespace VehicleTrackerApi.Controllers
             var report = _repository.Reports.GetAll().Where(x=>x.Id==entity.Id && x.ReportState!=PlaceState.Enter).FirstOrDefault();
             if (report == null)
             {
-                
 
 
 
-                var map = _mapper.Map<Vehicle>(entity);
+
+                Vehicle vehicle = _mapper.Map<Vehicle>(entity);
                 var Vehicleposition = new VehiclePosition
                 {
-                    Location = map.CurrentLocation,
-                    Vehicle = map
+                    Location = vehicle.CurrentLocation,
+                    VehicleId = vehicle.Id
                 };
-                //var CreateReport = new Report
-                //{
-                //    CreateReportDate = DateTime.Now,
-                //    Vehicle=map,
-                //    ReportState=PlaceState.Enter,
-                //};
-                _repository.Vehicles.Update(map);
+
+
+
+                _repository.Vehicles.Update(vehicle);
                 _repository.VehiclePositions.Add(Vehicleposition);
-               // _repository.Reports.Add(CreateReport);
+                _repository.Vehicles.IsVehicleInPlace(vehicle);
                 _repository.Complete();
 
-                
+
                 return Ok(entity);
             }
 
             return BadRequest();
         }
 
-       
+      
+
 
         [HttpDelete]
         [ProducesResponseType(typeof(void), 200)]

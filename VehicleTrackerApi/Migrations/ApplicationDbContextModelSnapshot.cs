@@ -90,9 +90,6 @@ namespace VehicleTrackerApi.Migrations
                     b.Property<Point>("CurrentLocation")
                         .HasColumnType("geography");
 
-                    b.Property<int>("IsInPlace")
-                        .HasColumnType("int");
-
                     b.Property<string>("RegisterNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -105,42 +102,36 @@ namespace VehicleTrackerApi.Migrations
                         {
                             Id = 1,
                             CurrentLocation = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"),
-                            IsInPlace = 30,
                             RegisterNumber = "04TT336"
                         },
                         new
                         {
                             Id = 2,
                             CurrentLocation = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"),
-                            IsInPlace = 30,
                             RegisterNumber = "34ET336"
                         },
                         new
                         {
                             Id = 3,
                             CurrentLocation = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"),
-                            IsInPlace = 30,
                             RegisterNumber = "04BT336"
                         },
                         new
                         {
                             Id = 4,
                             CurrentLocation = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"),
-                            IsInPlace = 30,
                             RegisterNumber = "04TA336"
                         },
                         new
                         {
                             Id = 5,
                             CurrentLocation = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"),
-                            IsInPlace = 30,
                             RegisterNumber = "04AT336"
                         },
                         new
                         {
                             Id = 6,
                             CurrentLocation = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"),
-                            IsInPlace = 30,
                             RegisterNumber = "12AZ1236"
                         });
                 });
@@ -175,13 +166,14 @@ namespace VehicleTrackerApi.Migrations
                     b.HasOne("VehicleTrackerApi.Data.Model.Place", "Place")
                         .WithMany("Reports")
                         .HasForeignKey("PlaceId")
+                        .HasConstraintName("Report_Place_FK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("VehicleTrackerApi.Data.Model.Vehicle", "Vehicle")
                         .WithMany("Reports")
                         .HasForeignKey("VehicleId")
-                        .HasConstraintName("ReportID_vehicle_Fk")
+                        .HasConstraintName("Report_Vehicle_FK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -195,6 +187,7 @@ namespace VehicleTrackerApi.Migrations
                     b.HasOne("VehicleTrackerApi.Data.Model.Vehicle", "Vehicle")
                         .WithMany("VehiclePositions")
                         .HasForeignKey("VehicleId")
+                        .HasConstraintName("VehiclePositions_Place_FK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

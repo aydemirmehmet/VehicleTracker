@@ -27,24 +27,27 @@ namespace VehicleApi.Contexts
 
             modelBuilder.Entity<Place>(entity=> {
                 entity.Property(x => x.Id).UseIdentityColumn();
-                entity.HasMany(x => x.Reports).WithOne(x => x.Place).HasForeignKey(x => x.PlaceId);
-             
+            
             });
 
 
             modelBuilder.Entity<Vehicle>(entity => {
                 entity.Property(x => x.Id).UseIdentityColumn();
-                entity.HasMany(x => x.Reports).WithOne(x => x.Vehicle).HasForeignKey(x => x.VehicleId).HasConstraintName("ReportID_vehicle_Fk");
-               
+              
             });
           
 
             modelBuilder.Entity<VehiclePosition>(entity => {
                 entity.Property(x => x.Id).UseIdentityColumn();
+                entity.HasOne(x => x.Vehicle).WithMany(x => x.VehiclePositions).HasForeignKey(x => x.VehicleId).HasConstraintName("VehiclePositions_Place_FK");
+
             });
 
             modelBuilder.Entity<Report>(entity => {
                 entity.Property(x => x.Id).UseIdentityColumn();
+                entity.HasOne(x => x.Vehicle).WithMany(x => x.Reports).HasForeignKey(x => x.VehicleId).HasConstraintName("Report_Vehicle_FK");
+                entity.HasOne(x => x.Place).WithMany(x => x.Reports).HasForeignKey(x => x.PlaceId).HasConstraintName("Report_Place_FK");
+
             });
 
 

@@ -9,6 +9,6 @@ namespace VehicleTrackerApi.Services.Base
     public interface IVehicleRepository:IGeneralRepository<Vehicle>
     {
 
-        bool IsVehicleInPlace();
+        void IsVehicleInPlace(Vehicle entity);
     }
 }

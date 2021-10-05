@@ -15,9 +15,30 @@ namespace VehicleTrackerApi.Services
 
         }
 
-        public bool IsVehicleInPlace()
+
+        public void IsVehicleInPlace(Vehicle entity)
         {
-            throw new NotImplementedException();
+           
+            Place VehicleInPlace = _context.Places.Where(x => x.Location.Contains(entity.CurrentLocation)).FirstOrDefault();
+            if (VehicleInPlace != null)
+            {
+                var reportResult = _context.Reports.Where(x => x.PlaceId == entity.Id && x.ReportState == PlaceState.Enter).FirstOrDefault();
+                if (reportResult == null)
+                {
+                    var CreateReport = new Report
+                    {
+                        CreateReportDate = DateTime.Now,
+                        VehicleId = entity.Id,
+                        PlaceId = VehicleInPlace.Id,
+                        ReportState = PlaceState.Enter,
+                    };
+                    _context.Reports.Add(CreateReport);
+                    
+                }
+
+            }
+
+         
         }
     }
 

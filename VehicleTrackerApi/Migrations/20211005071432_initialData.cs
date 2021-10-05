@@ -4,7 +4,7 @@ using NetTopologySuite.Geometries;
 
 namespace VehicleTrackerApi.Migrations
 {
-    public partial class initial : Migration
+    public partial class initialData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,8 +29,7 @@ namespace VehicleTrackerApi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RegisterNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CurrentLocation = table.Column<Point>(type: "geography", nullable: true),
-                    IsInPlace = table.Column<int>(type: "int", nullable: false)
+                    CurrentLocation = table.Column<Point>(type: "geography", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -52,13 +51,13 @@ namespace VehicleTrackerApi.Migrations
                 {
                     table.PrimaryKey("PK_Reports", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reports_Places_PlaceId",
+                        name: "Report_Place_FK",
                         column: x => x.PlaceId,
                         principalTable: "Places",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "ReportID_vehicle_Fk",
+                        name: "Report_Vehicle_FK",
                         column: x => x.VehicleId,
                         principalTable: "Vehicles",
                         principalColumn: "Id",
@@ -79,7 +78,7 @@ namespace VehicleTrackerApi.Migrations
                 {
                     table.PrimaryKey("PK_VehiclePositions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VehiclePositions_Vehicles_VehicleId",
+                        name: "VehiclePositions_Place_FK",
                         column: x => x.VehicleId,
                         principalTable: "Vehicles",
                         principalColumn: "Id",
@@ -93,15 +92,15 @@ namespace VehicleTrackerApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "Vehicles",
-                columns: new[] { "Id", "CurrentLocation", "IsInPlace", "RegisterNumber" },
+                columns: new[] { "Id", "CurrentLocation", "RegisterNumber" },
                 values: new object[,]
                 {
-                    { 1, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), 30, "04TT336" },
-                    { 2, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), 30, "34ET336" },
-                    { 3, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), 30, "04BT336" },
-                    { 4, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), 30, "04TA336" },
-                    { 5, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), 30, "04AT336" },
-                    { 6, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), 30, "12AZ1236" }
+                    { 1, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "04TT336" },
+                    { 2, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "34ET336" },
+                    { 3, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "04BT336" },
+                    { 4, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "04TA336" },
+                    { 5, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "04AT336" },
+                    { 6, (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.6 36.6)"), "12AZ1236" }
                 });
 
             migrationBuilder.CreateIndex(

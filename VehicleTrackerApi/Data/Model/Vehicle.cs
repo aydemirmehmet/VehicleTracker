@@ -15,7 +15,6 @@ namespace VehicleTrackerApi.Data.Model
         public List<VehiclePosition> VehiclePositions { get; set; }
         public List<Report> Reports { get; set; }
 
-        public PlaceState IsInPlace { get; set; } = PlaceState.OnRoad;
-       
+   
     }
 }
