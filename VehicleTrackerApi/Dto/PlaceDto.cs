@@ -8,7 +8,8 @@ namespace VehicleTrackerApi.Dto
 {
     public class PlaceDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
-        public Geometry Location { get; set; }
+        public GeoJsonResultItem Location { get; set; }
     }
 }

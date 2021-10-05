@@ -38,9 +38,9 @@ namespace VehicleTrackerApi.Controllers
         }
 
         [HttpGet]
-        [Produces("application/geo+json")]
-        [ProducesResponseType(typeof(FeatureCollection), 200)]
-        public FeatureCollection Get()
+
+      
+        public IActionResult Get()
         {
             var result = _repository.Vehicles.GetAll();
           
@@ -58,13 +58,13 @@ namespace VehicleTrackerApi.Controllers
                 });
             }
    
-            return CreateJson;
+            return Ok(CreateJson);
         }
 
         [HttpGet("RouteOfVehicle")]
         [Produces("application/geo+json")]
-        [ProducesResponseType(typeof(FeatureCollection), 200)]
-        public FeatureCollection RouteOfVehicle(int Id)
+        [ProducesResponseType(typeof(GeoJsonResultItem), 200)]
+        public IActionResult RouteOfVehicle(int Id)
         {
             var result = _repository.VehiclePositions.GetAll( include: source => source.Include(x => x.Vehicle)).Where(x=>x.Vehicle.Id==Id).ToList();
         
@@ -85,7 +85,7 @@ namespace VehicleTrackerApi.Controllers
                 });
             }
 
-            return CreateJson;
+            return Ok(CreateJson);
         }
         [HttpPost]
    
@@ -105,8 +105,6 @@ namespace VehicleTrackerApi.Controllers
         [ProducesResponseType(typeof(void), 400)]
         public IActionResult SaveLocation([FromBody] VehicleDto entity)
         {
-           
-
                 Vehicle vehicle = _mapper.Map<Vehicle>(entity);
 
                 var Vehicleposition = new VehiclePosition
@@ -115,8 +113,6 @@ namespace VehicleTrackerApi.Controllers
                     Location = vehicle.CurrentLocation,
                     VehicleId = vehicle.Id
                 };
-
-
 
                 _repository.Vehicles.Update(vehicle);
                 _repository.VehiclePositions.Add(Vehicleposition);
