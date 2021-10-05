@@ -16,29 +16,54 @@ namespace VehicleTrackerApi.Services
         }
 
 
-        public void IsVehicleInPlace(Vehicle entity)
+        public bool IsVehicleInPlace(Vehicle entity,PlaceState state)
         {
-           
+            bool check = false;
             Place VehicleInPlace = _context.Places.Where(x => x.Location.Contains(entity.CurrentLocation)).FirstOrDefault();
             if (VehicleInPlace != null)
             {
-                var reportResult = _context.Reports.Where(x => x.PlaceId == entity.Id && x.ReportState == PlaceState.Enter).FirstOrDefault();
+                var reportResult = _context.Reports.Where(x => x.VehicleId == entity.Id  ).FirstOrDefault();
+                var CreateReport = new Report
+                {
+                    CreateReportDate = DateTime.Now,
+                    VehicleId = entity.Id,
+                    PlaceId = VehicleInPlace.Id,
+                    ReportState = state,
+                 
+                  
+                };
+               
+
                 if (reportResult == null)
                 {
-                    var CreateReport = new Report
-                    {
-                        CreateReportDate = DateTime.Now,
-                        VehicleId = entity.Id,
-                        PlaceId = VehicleInPlace.Id,
-                        ReportState = PlaceState.Enter,
-                    };
+                   
+
+                    CreateReport.IsFirstEnter = true;
                     _context.Reports.Add(CreateReport);
-                    
+                    check = true;
+                }
+                else
+                {
+                    if (state == PlaceState.Enter)
+                    {
+                        CreateReport.IsFirstEnter = false;
+
+                    }
+                    else if (state == PlaceState.Exit)
+                    {
+                      
+                            CreateReport.IsFirstEnter = true;
+                            _context.Reports.Add(CreateReport);
+                            check = true;
+                        
+                       
+                    }
+
                 }
 
             }
 
-         
+            return check;
         }
     }
 

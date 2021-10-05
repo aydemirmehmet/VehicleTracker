@@ -10,6 +10,7 @@ namespace VehicleTrackerApi.Data.Model
         public DateTime CreateReportDate { get; set; }
 
         public int VehicleId { get; set; }
+        public bool IsFirstEnter { get; set; } = false;
         public Vehicle Vehicle { get; set; }
         public int PlaceId { get; set; }
         public Place Place { get; set; }

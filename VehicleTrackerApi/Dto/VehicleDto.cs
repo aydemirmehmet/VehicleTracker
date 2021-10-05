@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VehicleTrackerApi.Data.Model;
 
 namespace VehicleTrackerApi.Dto
 {
@@ -11,5 +12,6 @@ namespace VehicleTrackerApi.Dto
         public string RegisterNumber { get; set; }
         public double Latitude { get; set; }
         public double Longtitude { get; set; }
+        public PlaceState State { get; set; }
     }
 }
